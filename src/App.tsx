@@ -1,11 +1,18 @@
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 import { AppLayout } from './components/layout';
 import "@mantine/core/styles.css";
+import "./styles/global.css";
 
 export function App() {
   return (
-    <MantineProvider>
-      <AppLayout />
-    </MantineProvider>
+    <>
+      <ColorSchemeScript />
+      <MantineProvider
+        defaultColorScheme="light"
+        withCssVariables
+      >
+        <AppLayout />
+      </MantineProvider>
+    </>
   )
 };
