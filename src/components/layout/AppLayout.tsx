@@ -3,12 +3,12 @@ import {
   AppShell,
   Burger,
   Group,
-  // MantineProvider,
-  // Navbar,
   ScrollArea,
   Text,
   rem,
 } from "@mantine/core";
+import { Sidebar } from "@components/sidebar";
+import { chats, activeChatId, onChatClick } from "@mocks/chats";
 
 export const AppLayout = () => {
   const [opened, setOpened] = useState(false);
@@ -37,10 +37,7 @@ export const AppLayout = () => {
 
       <AppShell.Navbar p="md">
         <ScrollArea h={`calc(100vh - ${rem(60)})`}>
-          <Text fw={500} mb="sm">
-            Sidebar
-          </Text>
-          <Text size="sm">Тут список чатов, контакты и т.п.</Text>
+          <Sidebar chats={chats} activeChatId={activeChatId} onChatClick={onChatClick} />
         </ScrollArea>
       </AppShell.Navbar>
 
