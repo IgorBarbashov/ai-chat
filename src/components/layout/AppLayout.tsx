@@ -8,6 +8,8 @@ import {
   rem,
 } from "@mantine/core";
 import { Sidebar } from "@components/sidebar";
+import { ThemeToggle } from "@components/themeToggle";
+
 import { chats, activeChatId, onChatClick } from "@mocks/chats";
 
 export const AppLayout = () => {
@@ -24,14 +26,18 @@ export const AppLayout = () => {
       header={{ height: 60 }}
     >
       <AppShell.Header>
-        <Group h="100%" px="md">
-          <Burger
-            opened={opened}
-            onClick={() => setOpened((o) => !o)}
-            hiddenFrom="sm"
-            size="sm"
-          />
-          <Text fw={500}>Chat layout</Text>
+        <Group h="100%" px="md" justify="space-between">
+          <Group gap="sm">
+            <Burger
+              opened={opened}
+              onClick={() => setOpened((o) => !o)}
+              hiddenFrom="sm"
+              size="sm"
+            />
+            <Text fw={500}>Chat layout</Text>
+          </Group>
+
+          <ThemeToggle />
         </Group>
       </AppShell.Header>
 
