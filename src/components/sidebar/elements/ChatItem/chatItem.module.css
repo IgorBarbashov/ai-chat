@@ -1,0 +1,29 @@
+.root {
+  cursor: pointer;
+  padding: 4px;
+  padding-inline: 8px;
+  border-radius: 4px;
+  transition: background-color 0.1s ease;
+}
+
+.root:hover {
+  background-color: var(--mantine-color-gray-1);
+}
+
+.rootActive {
+  background-color: var(--mantine-color-blue-0);
+}
+
+.content {
+  min-width: 0;
+  flex: 1;
+}
+
+.actions {
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+.root:hover .actions {
+  opacity: 1;
+}
