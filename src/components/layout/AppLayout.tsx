@@ -9,8 +9,8 @@ import {
 } from "@mantine/core";
 import { Sidebar } from "@components/sidebar";
 import { ThemeToggle } from "@components/themeToggle";
-
 import { chats, activeChatId, onChatClick } from "@mocks/chats";
+import { InputArea } from "@components/chat/inputArea";
 
 export const AppLayout = () => {
   const [opened, setOpened] = useState(false);
@@ -61,6 +61,12 @@ export const AppLayout = () => {
         >
           Здесь будет ваш компонент чата
         </div>
+
+        <InputArea
+          onSend={(message) => {
+            console.log("Send message:", message);
+          }}
+        />
       </AppShell.Main>
     </AppShell>
   );

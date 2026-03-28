@@ -1,0 +1,31 @@
+.root {
+    position: sticky;
+    bottom: 0;
+    padding-top: 12px;
+    background: var(--app-bg, var(--mantine-color-body));
+}
+
+.inner {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid var(--app-border-color, var(--mantine-color-default-border));
+    border-radius: 12px;
+    background: var(--mantine-color-body);
+}
+
+.field {
+    flex: 1;
+}
+
+.textarea {
+    overflow: hidden;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
