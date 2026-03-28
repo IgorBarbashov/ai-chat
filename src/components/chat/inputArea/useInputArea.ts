@@ -18,7 +18,7 @@ export const useInputArea = ({ onSend }: UseInputAreaParams) => {
     const submit = useCallback(() => {
         if (!canSend) return;
 
-        onSend?.(trimmedValue);
+        onSend(trimmedValue);
         setValue("");
     }, [canSend, onSend, trimmedValue]);
 

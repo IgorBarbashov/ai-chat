@@ -1,31 +1,29 @@
 .root {
-    position: sticky;
-    bottom: 0;
-    padding-top: 12px;
-    background: var(--app-bg, var(--mantine-color-body));
-}
-
-.inner {
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
     gap: 8px;
+    flex-shrink: 0;
+    min-width: 0;
+
+    margin-top: 12px;
     padding: 12px;
     border: 1px solid var(--app-border-color, var(--mantine-color-default-border));
     border-radius: 12px;
     background: var(--mantine-color-body);
 }
 
-.field {
-    flex: 1;
+.textareaRoot {
+    width: 100%;
 }
 
-.textarea {
+.textareaInput {
+    width: 100%;
     overflow: hidden;
 }
 
-.actions {
+.actionsRow {
+    width: 100%;
     display: flex;
     align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
+    justify-content: space-between;
 }

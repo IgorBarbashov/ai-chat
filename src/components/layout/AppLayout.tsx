@@ -11,6 +11,7 @@ import { Sidebar } from "@components/sidebar";
 import { ThemeToggle } from "@components/themeToggle";
 import { chats, activeChatId, onChatClick } from "@mocks/chats";
 import { InputArea } from "@components/chat/inputArea";
+import styles from "./AppLayout.module.css";
 
 export const AppLayout = () => {
   const [opened, setOpened] = useState(false);
@@ -43,30 +44,30 @@ export const AppLayout = () => {
 
       <AppShell.Navbar p="md">
         <ScrollArea h={`calc(100vh - ${rem(60)})`}>
-          <Sidebar chats={chats} activeChatId={activeChatId} onChatClick={onChatClick} />
+          <Sidebar
+            chats={chats}
+            activeChatId={activeChatId}
+            onChatClick={onChatClick}
+          />
         </ScrollArea>
       </AppShell.Navbar>
 
       <AppShell.Main>
-        <Text fw={500} mb="sm">
-          Chat area
-        </Text>
-        <div
-          style={{
-            border: "1px solid #ddd",
-            borderRadius: 8,
-            height: "70vh",
-            padding: 16,
-          }}
-        >
-          Здесь будет ваш компонент чата
-        </div>
+        <div className={styles.main}>
+          <Text fw={500} mb="sm">
+            Chat area
+          </Text>
 
-        <InputArea
-          onSend={(message) => {
-            console.log("Send message:", message);
-          }}
-        />
+          <div className={styles.chatWindow}>
+            Здесь будет ваш компонент чата (активный id: {activeChatId})
+          </div>
+
+          <InputArea
+            onSend={(message) => {
+              console.log("Send message:", message);
+            }}
+          />
+        </div>
       </AppShell.Main>
     </AppShell>
   );

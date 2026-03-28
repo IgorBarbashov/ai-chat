@@ -1,8 +1,8 @@
-import { ActionIcon, Button, Textarea } from "@mantine/core";
+import { ActionIcon, Button, Group, Textarea } from "@mantine/core";
 import { IconPhoto, IconPlayerStopFilled, IconSend } from "@tabler/icons-react";
 import { useInputArea } from "./useInputArea";
-import type { InputAreaProps } from "./InputArea.models";
 import styles from "./InputArea.module.css";
+import type { InputAreaProps } from "./InputArea.models";
 
 export const InputArea = ({ onSend }: InputAreaProps) => {
     const {
@@ -17,30 +17,31 @@ export const InputArea = ({ onSend }: InputAreaProps) => {
 
     return (
         <div className={styles.root}>
-            <div className={styles.inner}>
-                <div className={styles.field}>
-                    <Textarea
-                        classNames={{ input: styles.textarea }}
-                        placeholder="Введите сообщение"
-                        autosize
-                        minRows={1}
-                        maxRows={5}
-                        value={value}
-                        onChange={(event) => handleChange(event.currentTarget.value)}
-                        onKeyDown={handleKeyDown}
-                    />
-                </div>
+            <Textarea
+                classNames={{
+                    root: styles.textareaRoot,
+                    input: styles.textareaInput,
+                }}
+                placeholder="Введите сообщение"
+                autosize
+                minRows={1}
+                maxRows={5}
+                value={value}
+                onChange={(event) => handleChange(event.currentTarget.value)}
+                onKeyDown={handleKeyDown}
+            />
 
-                <div className={styles.actions}>
-                    <ActionIcon
-                        variant="subtle"
-                        size="lg"
-                        aria-label="Прикрепить изображение"
-                        onClick={handleAttachImage}
-                    >
-                        <IconPhoto size={18} />
-                    </ActionIcon>
+            <div className={styles.actionsRow}>
+                <ActionIcon
+                    variant="subtle"
+                    size="lg"
+                    aria-label="Прикрепить изображение"
+                    onClick={handleAttachImage}
+                >
+                    <IconPhoto size={18} />
+                </ActionIcon>
 
+                <Group gap="xs">
                     <Button
                         variant="light"
                         leftSection={<IconPlayerStopFilled size={14} />}
@@ -56,7 +57,7 @@ export const InputArea = ({ onSend }: InputAreaProps) => {
                     >
                         Отправить
                     </Button>
-                </div>
+                </Group>
             </div>
         </div>
     );
