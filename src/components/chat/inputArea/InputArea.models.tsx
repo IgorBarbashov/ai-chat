@@ -1,3 +1,3 @@
 export type InputAreaProps = {
-    onSend?: (message: string) => void;
+    onSend: (message: string) => void;
 };
