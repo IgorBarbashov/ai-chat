@@ -7,11 +7,11 @@
 }
 
 .root:hover {
-  background-color: var(--mantine-color-gray-1);
+  background-color: var(--mantine-color-dark-3);
 }
 
 .rootActive {
-  background-color: var(--mantine-color-blue-0);
+  background-color: var(--app-border-color);
 }
 
 .content {
