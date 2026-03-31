@@ -10,7 +10,8 @@ import {
 import { Sidebar } from "@components/sidebar";
 import { ThemeToggle } from "@components/themeToggle";
 import { chats, activeChatId, onChatClick } from "@mocks/chats";
-import { InputArea } from "@components/chat/inputArea";
+import { InputArea } from "@components/chat/InputArea";
+import { ChatWindow } from "@components/chat/ChatWindow";
 import styles from "./AppLayout.module.css";
 
 export const AppLayout = () => {
@@ -54,13 +55,7 @@ export const AppLayout = () => {
 
       <AppShell.Main>
         <div className={styles.main}>
-          <Text fw={500} mb="sm">
-            Chat area
-          </Text>
-
-          <div className={styles.chatWindow}>
-            Здесь будет ваш компонент чата (активный id: {activeChatId})
-          </div>
+          <ChatWindow activeChatId={activeChatId} />
 
           <InputArea
             onSend={(message) => {
