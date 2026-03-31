@@ -1,4 +1,18 @@
-Проанализируй проект. Нужно добавить Область чата (ChatWindow)
+const handleCopy = () => {
+    if (!navigator.clipboard) {
+      return;
+    }
+
+    navigator.clipboard.writeText(text).catch(() => {
+      if (process.env.NODE_ENV !== "production") {
+        // eslint-disable-next-line no-console
+        console.warn("Failed to copy message", id);
+      }
+    });
+  };
+  
+  
+  Проанализируй проект. Нужно добавить Область чата (ChatWindow)
 Компонент ChatWindow (центральная зона) должен включать:
 - заголовок с названием текущего чата и кнопкой настроек;
 - область сообщений MessageList с вертикальной прокруткой;
