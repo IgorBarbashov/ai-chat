@@ -28,13 +28,14 @@
 }
 
 .messageBubbleUser {
-  background-color: var(--mantine-color-blue-6);
-  color: white;
+  background-color: color-mix(in srgb, var(--mantine-color-blue-6) 80%, var(--mantine-color-dark-7));
+  color: var(--mantine-color-gray-0);
   border-bottom-right-radius: 2px;
 }
 
 .messageBubbleAssistant {
-  background-color: var(--mantine-color-gray-1);
+  background-color: color-mix(in srgb, var(--mantine-color-gray-1) 80%, var(--mantine-color-dark-7));
+  color: var(--mantine-color-dark-9);
   border-bottom-left-radius: 2px;
 }
 
