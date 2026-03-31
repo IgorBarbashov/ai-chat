@@ -1,4 +1,5 @@
 import { Loader, ScrollArea } from "@mantine/core";
+import { Message } from "@components/chat/Message";
 import type { MessageListProps } from "./MessageList.models";
 import styles from "./MessageList.module.css";
 
@@ -9,36 +10,17 @@ export const MessageList = ({ messages, loading }: MessageListProps) => {
 
       {!loading &&
         messages.map((message) => {
-          const isUser = message.variant === "user";
-
-          if (isUser) {
-            return (
-              <div
-                key={message.id}
-                className={`${styles.messageRow} ${styles.messageUser}`}
-              >
-                <div
-                  className={`${styles.messageBubble} ${styles.messageBubbleUser}`}
-                >
-                  {message.text}
-                </div>
-              </div>
-            );
-          }
-
           return (
             <div
               key={message.id}
-              className={`${styles.messageRow} ${styles.messageAssistant}`}
+              className={styles.messageRow}
             >
-              <div className={styles.assistantRowContent}>
-                <div className={styles.assistantAvatar}>G</div>
-                <div
-                  className={`${styles.messageBubble} ${styles.messageBubbleAssistant}`}
-                >
-                  {message.text}
-                </div>
-              </div>
+              <Message
+                id={message.id}
+                author={message.author}
+                text={message.text}
+                variant={message.variant}
+              />
             </div>
           );
         })}
