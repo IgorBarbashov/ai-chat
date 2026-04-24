@@ -1,85 +1,59 @@
-# Architecture
+# Архитектура
 
-## Tech stack
-
-| Layer | Technology |
-|---|---|
-| Framework | React 19 |
-| Language | TypeScript 5.9 |
-| Build tool | Vite 8 |
-| UI library | Mantine v8 (`@mantine/core`, `@mantine/hooks`) |
-| Icons | `@tabler/icons-react` |
-| Markdown | `react-markdown` |
-
-## Folder structure
+## Структура директорий
 
 ```
 src/
-  components/
-    layout/         # AppLayout (AppShell)
-    sidebar/        # Sidebar, ChatList, ChatItem, SearchInput
-    chat/           # ChatWindow, MessageList, Message, InputArea
-    themeToggle/    # ThemeToggle
-  entities/
-    chat/           # Chat interface (id, title, lastMessageDate)
-  mocks/
-    chats.ts        # Static mock data
-  styles/
-    global.css
-  App.tsx
-  main.tsx
-docs/
-  ui-spec.md
-  functional-spec.md
-  architecture.md
-  roadmap.md
-  tasks/
+├── components/          # React-компоненты, сгруппированные по фиче
+│   ├── chat/
+│   │   ├── ChatWindow/
+│   │   ├── InputArea/
+│   │   ├── Message/
+│   │   └── MessageList/
+│   ├── layout/
+│   │   └── AppLayout/
+│   ├── sidebar/
+│   │   ├── elements/
+│   │   └── Sidebar/
+│   └── themeToggle/
+├── entities/            # TypeScript-модели данных
+│   └── chat/
+├── mocks/               # Моковые данные для разработки
+└── styles/              # Глобальные стили и CSS-переменные
 ```
 
-## Path aliases
-
-| Alias | Resolves to |
-|---|---|
-| `@components` | `src/components` |
-| `@entities` | `src/entities` |
-| `@mocks` | `src/mocks` |
-
-## Data flow
+## Дерево компонентов
 
 ```
-mocks/chats.ts
-  └─> Sidebar (chat list)
-  └─> ChatWindow
-        └─> useChatMessages (mock, 500 ms delay)
-              └─> MessageList
-                    └─> Message
+App
+└── AppLayout
+    ├── Sidebar
+    │   ├── SearchInput
+    │   └── ChatList
+    │       └── ChatItem
+    └── ChatWindow
+        ├── MessageList
+        │   └── Message
+        └── InputArea
 ```
 
-Currently all data is static. No API client, no router, no global state manager.
+## Поток данных
 
-## Key interfaces
+- `AppLayout` хранит `activeChatId` и передаёт его в `Sidebar` (для выделения) и `ChatWindow` (для загрузки сообщений)
+- `useChatMessages(activeChatId)` — загружает сообщения чата (сейчас мок, в будущем — API)
+- `useInputArea` — управляет состоянием поля ввода; отправка сообщений — placeholder
 
-```ts
-// src/entities/chat/chat.models.ts
-interface Chat {
-  id: string;
-  title: string;
-  lastMessageDate: string;
-}
+## API-слой (не реализован)
 
-// src/components/chat/ChatWindow/ChatWindow.models.ts
-type MessageVariant = "user" | "assistant";
+Планируется выделить отдельный слой `src/api/` по паттерну адаптер:
+- `gigachat/auth.ts` — OAuth-авторизация
+- `gigachat/chat.ts` — отправка сообщений, стриминг SSE
 
-interface ChatMessage {
-  id: string;
-  chatId: string;
-  author: string;
-  variant: MessageVariant;
-  text: string;
-  createdAt: string;
-}
-```
+## State Management
 
-## Future considerations
+Текущий подход: локальный `useState` + кастомные хуки.  
+Планируется: `Context API + useReducer` для глобального состояния чатов.
 
-<!-- API integration, routing, global state, auth — to be defined -->
+## Соглашения по именованию
+
+См. `docs/rules.md`.

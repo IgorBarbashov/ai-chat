@@ -1,46 +1,29 @@
 # Roadmap
 
-## Status legend
+## Фаза 1 — Базовый чат
 
-| Icon | Meaning |
-|---|---|
-| Done | Implemented |
-| In progress | Currently being worked on |
-| Planned | Agreed, not started |
-| Idea | Under consideration |
+- [x] Компоненты: `ChatWindow`, `Message`, `MessageList`, `InputArea`
+- [x] Боковая панель с поиском и списком чатов
+- [x] Markdown-рендеринг сообщений
+- [x] Базовый UI (AppShell, тема, ThemeToggle)
+- [ ] API-слой: отправка сообщений к `/chat/completions`
+- [ ] Отображение ответа от GigaChat
+- [ ] Базовая обработка ошибок
 
-## Milestones
+## Фаза 2 — Streaming и UX
 
-### M1 — UI Shell (Done)
+- [ ] Streaming через SSE (`stream: true`)
+- [ ] Постепенное отображение ответа токен за токеном
+- [ ] Индикатор печати (typing indicator)
+- [ ] Автоскролл к последнему сообщению
+- [ ] Кнопка «Остановить генерацию»
+- [ ] Подсветка синтаксиса в блоках кода
 
-- AppLayout with collapsible sidebar
-- Theme toggle (light / dark)
-- Static chat list with search
-- ChatWindow with mock messages and loading state
-- Message rendering with Markdown support
-- InputArea (UI only)
+## Фаза 3 — Управление чатами
 
-### M2 — Interactivity
-
-<!-- Planned features for the next iteration -->
-
-- [ ] Select a chat from the sidebar and load its messages
-- [ ] Send a message (optimistic UI)
-- [ ] Input validation and keyboard shortcuts
-
-### M3 — API integration
-
-<!-- To be defined -->
-
-- [ ] Connect to a real backend / LLM API
-- [ ] Replace mock data with API calls
-- [ ] Handle loading and error states
-
-### M4 — Extended features
-
-<!-- Ideas, not committed -->
-
-- [ ] Authentication
-- [ ] Chat creation and deletion
-- [ ] Message streaming (SSE / WebSocket)
-- [ ] Routing and deep links to specific chats
+- [ ] Создание нового чата
+- [ ] Автогенерация названия чата
+- [ ] Редактирование и удаление чата
+- [ ] Переключение между чатами
+- [ ] Персистентность в `localStorage` / `IndexedDB`
+- [ ] Поиск по содержимому чатов

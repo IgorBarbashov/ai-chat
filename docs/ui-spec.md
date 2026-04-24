@@ -1,54 +1,39 @@
-# UI Specification
+# UI-спецификация
 
-## Layout
+## Общий макет
 
-<!-- Describe AppShell structure: navbar (sidebar), header, main content area -->
+Приложение использует `Mantine AppShell` с тремя зонами:
+- **Navbar** — боковая панель (sidebar) с фиксированной шириной
+- **Header** — верхняя панель (опционально)
+- **Main** — основная область чата
 
-### AppShell
+Поддерживается светлая и тёмная тема (`ThemeToggle`).
 
-- Collapsible navbar (sidebar) — left panel
-- Header — top bar
-- Main — chat window area
+## Боковая панель (Sidebar)
 
-## Theming
+- Поле поиска по чатам (`SearchInput`)
+- Список чатов (`ChatList` → `ChatItem`)
+- Кнопка создания нового чата
+- Активный чат визуально выделен
 
-<!-- Light / dark mode toggle. Mantine ColorScheme. -->
+## Область чата (ChatWindow)
 
-- Mantine v8 theme provider in `main.tsx`
-- Theme toggle component: `src/components/themeToggle/ThemeToggle.tsx`
-- Color scheme: light / dark
+### Список сообщений (MessageList)
+- Сообщения расположены вертикально, новые — снизу
+- Стиль сообщения зависит от роли: `user` / `assistant`
+- Состояние загрузки отображается индикатором
 
-## Components
+### Сообщение (Message)
+- Текст рендерится через `react-markdown`
+- Кнопка копирования в буфер обмена
+- Визуальное разделение между `user` и `assistant`
 
-### Sidebar
+### Поле ввода (InputArea)
+- Текстовое поле (многострочное)
+- Кнопка отправки
+- Кнопка прикрепления файла (placeholder)
+- Кнопка «Стоп» при активной генерации (placeholder)
 
-<!-- Search input, chat list, active item highlight, long-title truncation -->
+## Компоненты Mantine
 
-| Element | Description |
-|---|---|
-| `SearchInput` | Filters chat list by title |
-| `ChatList` | Renders the list of `ChatItem` |
-| `ChatItem` | Single row: title (truncated) + date |
-
-### ChatWindow
-
-<!-- Loading state, message list, input area -->
-
-| Element | Description |
-|---|---|
-| Loading state | Shown while messages are fetched (500 ms mock delay) |
-| `MessageList` | Scrollable list of messages |
-| `InputArea` | Text input + send action |
-
-### Message
-
-| Variant | Layout |
-|---|---|
-| `user` | Right-aligned bubble |
-| `assistant` | Left-aligned bubble with avatar |
-
-Markdown is rendered inside message text via `react-markdown`.
-
-## Responsive behavior
-
-<!-- To be defined -->
+Использовать существующие компоненты Mantine; не добавлять сторонние UI-библиотеки.

@@ -1,41 +1,40 @@
-# Functional Specification
+# Функциональная спецификация
 
-## Overview
+## Интерфейс чата
 
-<!-- Short description of what the application does -->
+### Отображение сообщений
+- [ ] Хронологический список сообщений пользователя и ассистента
+- [ ] Визуальное разделение: разный дизайн для `user` и `assistant`
+- [ ] Поддержка markdown-форматирования в ответах (заголовки, списки, код, ссылки)
+- [ ] Индикация загрузки (typing indicator) во время ожидания ответа
+- [ ] Автоматическая прокрутка к последнему сообщению
+- [ ] Копирование ответа ассистента в буфер обмена
 
-AI chat interface. Users can browse a list of conversations and read messages within each conversation.
+### Ввод сообщений
+- [ ] Поле ввода с отправкой по кнопке и по Enter
+- [ ] Кнопка «Остановить генерацию» при активном стриминге
+- [ ] Прикрепление изображений (multimodal)
 
-## User flows
+## Управление чатами
 
-### View chat list
+- [ ] Боковая панель со списком чатов
+- [ ] Создание нового чата
+- [ ] Автогенерация названия чата на основе первого сообщения
+- [ ] Переключение между чатами без потери данных
+- [ ] Редактирование названия чата
+- [ ] Удаление чата с подтверждением
+- [ ] Поиск по названию и содержимому чатов
 
-1. User opens the app.
-2. Sidebar displays a list of recent chats (title + date).
-3. User can filter chats by typing in the search input.
+## Интеграция с GigaChat API
 
-### Open a chat
+- [ ] OAuth-авторизация и хранение токена
+- [ ] Отправка запросов к `POST /api/v1/chat/completions`
+- [ ] Передача полного контекста диалога (массив `messages`)
+- [ ] Streaming-режим через SSE (`stream: true`)
+- [ ] Настраиваемые параметры: `temperature`, `top_p`, `max_tokens`, `repetition_penalty`
+- [ ] Получение списка моделей (`GET /api/v1/models`)
 
-1. User clicks a `ChatItem` in the sidebar.
-2. `ChatWindow` shows a loading indicator.
-3. After loading, messages are displayed in `MessageList`.
-4. The active chat is highlighted in the sidebar.
+## Персистентность
 
-### Send a message
-
-<!-- Not yet implemented -->
-
-- Input area is visible but send functionality is not yet wired up.
-
-### Toggle theme
-
-- User clicks the theme toggle in the header.
-- App switches between light and dark mode.
-
-## Out of scope (current iteration)
-
-- Authentication
-- Real API calls
-- Message streaming
-- Chat creation / deletion
-- Routing / deep links
+- [ ] Сохранение истории чатов в `localStorage` или `IndexedDB`
+- [ ] Восстановление состояния при перезагрузке страницы
