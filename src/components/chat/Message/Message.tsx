@@ -13,8 +13,7 @@ export const Message = ({ id, author, text, variant }: MessageProps) => {
     }
 
     navigator.clipboard.writeText(text).catch(() => {
-      if (process.env.NODE_ENV !== "production") {
-        // eslint-disable-next-line no-console
+      if (import.meta.env.DEV) {
         console.warn("Failed to copy message", id);
       }
     });

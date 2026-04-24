@@ -11,5 +11,14 @@ export default defineConfig({
       '@entities': path.resolve(__dirname, './src/entities'),
       '@mocks': path.resolve(__dirname, './src/mocks')
     },
-  }
+  },
+  server: {
+    proxy: {
+      '/api/v1': {
+        target: 'https://gigachat.devices.sberbank.ru',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 })
