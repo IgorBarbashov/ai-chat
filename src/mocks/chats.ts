@@ -26,8 +26,3 @@ export const chats = [
   }
 ]
 
-export const activeChatId = chats[0].id;
-
-export const onChatClick = () => {
-  console.log("click on chat");
-};
