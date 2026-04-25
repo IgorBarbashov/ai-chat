@@ -68,6 +68,11 @@ export const AppLayout = () => {
       [chatId]: [...(prev[chatId] ?? []), userMsg, assistantMsg],
     }));
 
+    if (prevMessages.length === 0 && chats.find((c) => c.id === chatId)?.title === "Новый чат") {
+      const title = text.length > 40 ? text.slice(0, 40).trimEnd() + "…" : text;
+      setChats((prev) => prev.map((c) => c.id === chatId ? { ...c, title } : c));
+    }
+
     setError(null);
     setIsLoading(true);
     const controller = new AbortController();
@@ -144,6 +149,7 @@ export const AppLayout = () => {
         <div className={styles.main}>
           <ChatWindow
               activeChatId={activeChatId}
+              title={chats.find((c) => c.id === activeChatId)?.title ?? "Выберите чат"}
               messages={messagesByChat[activeChatId] ?? []}
             />
 
