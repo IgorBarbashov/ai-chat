@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useLocalStorage } from "@mantine/hooks";
 import {
   Alert,
   AppShell,
@@ -21,7 +22,10 @@ import styles from "./AppLayout.module.css";
 export const AppLayout = () => {
   const [opened, setOpened] = useState(false);
   const [activeChatId, setActiveChatId] = useState(chats[0].id);
-  const [messagesByChat, setMessagesByChat] = useState<Record<string, ChatMessage[]>>({});
+  const [messagesByChat, setMessagesByChat] = useLocalStorage<Record<string, ChatMessage[]>>({
+    key: "ai-chat-messages",
+    defaultValue: {},
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
