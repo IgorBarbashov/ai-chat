@@ -1,4 +1,4 @@
-import { ActionIcon, Tooltip } from "@mantine/core";
+import { ActionIcon, Loader, Tooltip } from "@mantine/core";
 import { IconCopy } from "@tabler/icons-react";
 import ReactMarkdown from "react-markdown";
 import type { MessageProps } from "./Message.models";
@@ -48,7 +48,7 @@ export const Message = ({ id, author, text, variant }: MessageProps) => {
         <div className={styles.assistantAvatar}>G</div>
         <div className={`${styles.bubble} ${styles.bubbleAssistant}`}>
           <div className={styles.header}>{author}</div>
-          <ReactMarkdown>{text}</ReactMarkdown>
+          {text === "" ? <Loader size="xs" /> : <ReactMarkdown>{text}</ReactMarkdown>}
 
           <Tooltip label="Копировать" withArrow>
             <ActionIcon

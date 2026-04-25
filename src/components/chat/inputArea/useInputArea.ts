@@ -3,9 +3,10 @@ import type { KeyboardEvent } from "react";
 
 type UseInputAreaParams = {
     onSend: (message: string) => void;
+    onStop?: () => void;
 };
 
-export const useInputArea = ({ onSend }: UseInputAreaParams) => {
+export const useInputArea = ({ onSend, onStop }: UseInputAreaParams) => {
     const [value, setValue] = useState("");
 
     const trimmedValue = useMemo(() => value.trim(), [value]);
@@ -33,8 +34,8 @@ export const useInputArea = ({ onSend }: UseInputAreaParams) => {
     );
 
     const handleStop = useCallback(() => {
-        // заглушка под будущую остановку генерации
-    }, []);
+        onStop?.();
+    }, [onStop]);
 
     const handleAttachImage = useCallback(() => {
         // заглушка под будущее прикрепление изображения

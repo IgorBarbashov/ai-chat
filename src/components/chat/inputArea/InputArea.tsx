@@ -4,7 +4,7 @@ import { useInputArea } from "./useInputArea";
 import styles from "./InputArea.module.css";
 import type { InputAreaProps } from "./InputArea.models";
 
-export const InputArea = ({ onSend }: InputAreaProps) => {
+export const InputArea = ({ onSend, onStop, isStreaming = false }: InputAreaProps) => {
     const {
         value,
         canSend,
@@ -13,7 +13,7 @@ export const InputArea = ({ onSend }: InputAreaProps) => {
         submit,
         handleStop,
         handleAttachImage,
-    } = useInputArea({ onSend });
+    } = useInputArea({ onSend, onStop });
 
     return (
         <div className={styles.root}>
@@ -42,21 +42,23 @@ export const InputArea = ({ onSend }: InputAreaProps) => {
                 </ActionIcon>
 
                 <Group gap="xs">
-                    <Button
-                        variant="light"
-                        leftSection={<IconPlayerStopFilled size={14} />}
-                        onClick={handleStop}
-                    >
-                        Стоп
-                    </Button>
-
-                    <Button
-                        leftSection={<IconSend size={14} />}
-                        onClick={submit}
-                        disabled={!canSend}
-                    >
-                        Отправить
-                    </Button>
+                    {isStreaming ? (
+                        <Button
+                            variant="light"
+                            leftSection={<IconPlayerStopFilled size={14} />}
+                            onClick={handleStop}
+                        >
+                            Стоп
+                        </Button>
+                    ) : (
+                        <Button
+                            leftSection={<IconSend size={14} />}
+                            onClick={submit}
+                            disabled={!canSend}
+                        >
+                            Отправить
+                        </Button>
+                    )}
                 </Group>
             </div>
         </div>

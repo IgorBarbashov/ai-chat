@@ -21,7 +21,7 @@ export const AppLayout = () => {
   const [opened, setOpened] = useState(false);
   const [activeChatId, setActiveChatId] = useState(chats[0].id);
   const [messagesByChat, setMessagesByChat] = useState<Record<string, ChatMessage[]>>({});
-  const [, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
 
   const handleSend = async (text: string) => {
@@ -120,7 +120,11 @@ export const AppLayout = () => {
               messages={messagesByChat[activeChatId] ?? []}
             />
 
-          <InputArea onSend={handleSend} />
+          <InputArea
+              onSend={handleSend}
+              onStop={() => abortRef.current?.abort()}
+              isStreaming={isLoading}
+            />
         </div>
       </AppShell.Main>
     </AppShell>

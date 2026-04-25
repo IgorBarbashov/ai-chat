@@ -1,9 +1,16 @@
+import { useEffect, useRef } from "react";
 import { ScrollArea } from "@mantine/core";
 import { Message } from "@components/chat/Message";
 import type { MessageListProps } from "./MessageList.models";
 import styles from "./MessageList.module.css";
 
 export const MessageList = ({ messages }: MessageListProps) => {
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <ScrollArea className={styles.messages} scrollbarSize={6} type="hover">
       {messages.map((message) => (
@@ -16,6 +23,7 @@ export const MessageList = ({ messages }: MessageListProps) => {
           />
         </div>
       ))}
+      <div ref={bottomRef} />
     </ScrollArea>
   );
 };
