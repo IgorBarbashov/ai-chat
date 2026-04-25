@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import {
+  Alert,
   AppShell,
   Burger,
   Group,
@@ -22,6 +23,7 @@ export const AppLayout = () => {
   const [activeChatId, setActiveChatId] = useState(chats[0].id);
   const [messagesByChat, setMessagesByChat] = useState<Record<string, ChatMessage[]>>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
   const handleSend = async (text: string) => {
@@ -50,6 +52,7 @@ export const AppLayout = () => {
       [chatId]: [...(prev[chatId] ?? []), userMsg, assistantMsg],
     }));
 
+    setError(null);
     setIsLoading(true);
     const controller = new AbortController();
     abortRef.current = controller;
@@ -71,6 +74,13 @@ export const AppLayout = () => {
           };
         });
       }
+    } catch (e) {
+      if (controller.signal.aborted) return;
+      setError(e instanceof Error ? e.message : "Ошибка соединения");
+      setMessagesByChat((prev) => ({
+        ...prev,
+        [chatId]: (prev[chatId] ?? []).slice(0, -1),
+      }));
     } finally {
       setIsLoading(false);
       abortRef.current = null;
@@ -119,6 +129,12 @@ export const AppLayout = () => {
               activeChatId={activeChatId}
               messages={messagesByChat[activeChatId] ?? []}
             />
+
+          {error && (
+            <Alert color="red" title="Ошибка" withCloseButton onClose={() => setError(null)}>
+              {error}
+            </Alert>
+          )}
 
           <InputArea
               onSend={handleSend}
