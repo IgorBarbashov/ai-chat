@@ -11,7 +11,6 @@ import {
 } from "@mantine/core";
 import { Sidebar } from "@components/sidebar";
 import { ThemeToggle } from "@components/themeToggle";
-import { chats as mockChats } from "@mocks/chats";
 import type { Chat } from "@entities/chat";
 import { InputArea } from "@components/chat/InputArea";
 import { ChatWindow } from "@components/chat/ChatWindow";
@@ -22,8 +21,13 @@ import styles from "./AppLayout.module.css";
 
 export const AppLayout = () => {
   const [opened, setOpened] = useState(false);
-  const [chats, setChats] = useState<Chat[]>(mockChats);
-  const [activeChatId, setActiveChatId] = useState(mockChats[0].id);
+  const [chats, setChats] = useLocalStorage<Chat[]>({
+    key: "ai-chat-list",
+    defaultValue: [],
+  });
+  const [activeChatId, setActiveChatId] = useState(
+    () => JSON.parse(localStorage.getItem("ai-chat-list") ?? "[]")?.[0]?.id ?? ""
+  );
 
   const handleNewChat = () => {
     const newChat: Chat = {
@@ -33,6 +37,23 @@ export const AppLayout = () => {
     };
     setChats((prev) => [newChat, ...prev]);
     setActiveChatId(newChat.id);
+  };
+
+  const handleEditChat = (id: string, title: string) => {
+    setChats((prev) => prev.map((c) => c.id === id ? { ...c, title } : c));
+  };
+
+  const handleDeleteChat = (id: string) => {
+    setChats((prev) => prev.filter((c) => c.id !== id));
+    setMessagesByChat((prev) => {
+      const next = { ...prev };
+      delete next[id];
+      return next;
+    });
+    if (activeChatId === id) {
+      const remaining = chats.filter((c) => c.id !== id);
+      setActiveChatId(remaining[0]?.id ?? "");
+    }
   };
   const [messagesByChat, setMessagesByChat] = useLocalStorage<Record<string, ChatMessage[]>>({
     key: "ai-chat-messages",
@@ -141,6 +162,8 @@ export const AppLayout = () => {
             activeChatId={activeChatId}
             onChatClick={setActiveChatId}
             onNewChat={handleNewChat}
+            onEditChat={handleEditChat}
+            onDeleteChat={handleDeleteChat}
           />
         </ScrollArea>
       </AppShell.Navbar>

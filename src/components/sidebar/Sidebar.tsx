@@ -4,7 +4,7 @@ import { IconPlus } from "@tabler/icons-react";
 import { SearchInput, ChatList } from "./elements";
 import type { SidebarProps } from "./sidebar.models";
 
-export const Sidebar = ({ chats, activeChatId, onChatClick, onNewChat }: SidebarProps) => {
+export const Sidebar = ({ chats, activeChatId, onChatClick, onNewChat, onEditChat, onDeleteChat }: SidebarProps) => {
   const [query, setQuery] = useState("");
 
   const filteredChats = useMemo(() => {
@@ -34,6 +34,8 @@ export const Sidebar = ({ chats, activeChatId, onChatClick, onNewChat }: Sidebar
         chats={filteredChats}
         activeChatId={activeChatId}
         onChatClick={onChatClick}
+        onEditChat={onEditChat}
+        onDeleteChat={onDeleteChat}
       />
     </Stack>
   );

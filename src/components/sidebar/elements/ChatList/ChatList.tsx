@@ -6,6 +6,8 @@ export const ChatList = ({
   chats,
   activeChatId,
   onChatClick,
+  onEditChat,
+  onDeleteChat,
 }: ChatListProps) => {
   return (
     <Stack gap="xs">
@@ -15,6 +17,8 @@ export const ChatList = ({
           chat={chat}
           active={chat.id === activeChatId}
           onClick={() => onChatClick(chat.id)}
+          onEdit={(title) => onEditChat?.(chat.id, title)}
+          onDelete={() => onDeleteChat?.(chat.id)}
         />
       ))}
     </Stack>
