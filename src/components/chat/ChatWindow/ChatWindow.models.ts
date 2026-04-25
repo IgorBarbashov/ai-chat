@@ -11,5 +11,6 @@ export interface ChatMessage {
 
 export interface ChatWindowProps {
   activeChatId: string;
+  title: string;
   messages: ChatMessage[];
 }

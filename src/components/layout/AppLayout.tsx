@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useLocalStorage } from "@mantine/hooks";
 import {
   Alert,
   AppShell,
@@ -10,7 +11,7 @@ import {
 } from "@mantine/core";
 import { Sidebar } from "@components/sidebar";
 import { ThemeToggle } from "@components/themeToggle";
-import { chats } from "@mocks/chats";
+import type { Chat } from "@entities/chat";
 import { InputArea } from "@components/chat/InputArea";
 import { ChatWindow } from "@components/chat/ChatWindow";
 import type { ChatMessage } from "@components/chat/ChatWindow";
@@ -20,8 +21,44 @@ import styles from "./AppLayout.module.css";
 
 export const AppLayout = () => {
   const [opened, setOpened] = useState(false);
-  const [activeChatId, setActiveChatId] = useState(chats[0].id);
-  const [messagesByChat, setMessagesByChat] = useState<Record<string, ChatMessage[]>>({});
+  const [chats, setChats] = useLocalStorage<Chat[]>({
+    key: "ai-chat-list",
+    defaultValue: [],
+  });
+  const [activeChatId, setActiveChatId] = useState(
+    () => JSON.parse(localStorage.getItem("ai-chat-list") ?? "[]")?.[0]?.id ?? ""
+  );
+
+  const handleNewChat = () => {
+    const newChat: Chat = {
+      id: crypto.randomUUID(),
+      title: "Новый чат",
+      lastMessageDate: new Date().toISOString(),
+    };
+    setChats((prev) => [newChat, ...prev]);
+    setActiveChatId(newChat.id);
+  };
+
+  const handleEditChat = (id: string, title: string) => {
+    setChats((prev) => prev.map((c) => c.id === id ? { ...c, title } : c));
+  };
+
+  const handleDeleteChat = (id: string) => {
+    setChats((prev) => prev.filter((c) => c.id !== id));
+    setMessagesByChat((prev) => {
+      const next = { ...prev };
+      delete next[id];
+      return next;
+    });
+    if (activeChatId === id) {
+      const remaining = chats.filter((c) => c.id !== id);
+      setActiveChatId(remaining[0]?.id ?? "");
+    }
+  };
+  const [messagesByChat, setMessagesByChat] = useLocalStorage<Record<string, ChatMessage[]>>({
+    key: "ai-chat-messages",
+    defaultValue: {},
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
@@ -51,6 +88,11 @@ export const AppLayout = () => {
       ...prev,
       [chatId]: [...(prev[chatId] ?? []), userMsg, assistantMsg],
     }));
+
+    if (prevMessages.length === 0 && chats.find((c) => c.id === chatId)?.title === "Новый чат") {
+      const title = text.length > 40 ? text.slice(0, 40).trimEnd() + "…" : text;
+      setChats((prev) => prev.map((c) => c.id === chatId ? { ...c, title } : c));
+    }
 
     setError(null);
     setIsLoading(true);
@@ -119,6 +161,9 @@ export const AppLayout = () => {
             chats={chats}
             activeChatId={activeChatId}
             onChatClick={setActiveChatId}
+            onNewChat={handleNewChat}
+            onEditChat={handleEditChat}
+            onDeleteChat={handleDeleteChat}
           />
         </ScrollArea>
       </AppShell.Navbar>
@@ -127,6 +172,7 @@ export const AppLayout = () => {
         <div className={styles.main}>
           <ChatWindow
               activeChatId={activeChatId}
+              title={chats.find((c) => c.id === activeChatId)?.title ?? "Выберите чат"}
               messages={messagesByChat[activeChatId] ?? []}
             />
 
