@@ -5,7 +5,7 @@ import type { ChatWindowProps } from "./ChatWindow.models";
 import { MessageList } from "@components/chat/MessageList";
 import styles from "./ChatWindow.module.css";
 
-export const ChatWindow = ({ activeChatId, messages, loading }: ChatWindowProps) => {
+export const ChatWindow = ({ activeChatId, messages }: ChatWindowProps) => {
   const { title } = useChatWindowState(activeChatId);
 
   return (
@@ -20,7 +20,7 @@ export const ChatWindow = ({ activeChatId, messages, loading }: ChatWindowProps)
         </Tooltip>
       </div>
 
-      <MessageList messages={messages} loading={loading} />
+      <MessageList messages={messages} />
     </div>
   );
 };
