@@ -1,13 +1,11 @@
 import { ActionIcon, Tooltip } from "@mantine/core";
 import { IconSettings } from "@tabler/icons-react";
-import { useChatMessages } from "./useChatMessages";
 import { useChatWindowState } from "./useChatWindowState";
 import type { ChatWindowProps } from "./ChatWindow.models";
 import { MessageList } from "@components/chat/MessageList";
 import styles from "./ChatWindow.module.css";
 
-export const ChatWindow = ({ activeChatId }: ChatWindowProps) => {
-  const { messages, loading } = useChatMessages(activeChatId);
+export const ChatWindow = ({ activeChatId, messages, loading }: ChatWindowProps) => {
   const { title } = useChatWindowState(activeChatId);
 
   return (
