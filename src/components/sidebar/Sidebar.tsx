@@ -4,7 +4,7 @@ import { IconPlus } from "@tabler/icons-react";
 import { SearchInput, ChatList } from "./elements";
 import type { SidebarProps } from "./sidebar.models";
 
-export const Sidebar = ({ chats, activeChatId, onChatClick }: SidebarProps) => {
+export const Sidebar = ({ chats, activeChatId, onChatClick, onNewChat }: SidebarProps) => {
   const [query, setQuery] = useState("");
 
   const filteredChats = useMemo(() => {
@@ -23,6 +23,7 @@ export const Sidebar = ({ chats, activeChatId, onChatClick }: SidebarProps) => {
         leftSection={<IconPlus size={16} />}
         variant="filled"
         size="xs"
+        onClick={onNewChat}
       >
         Новый чат
       </Button>

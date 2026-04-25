@@ -4,4 +4,5 @@ export interface SidebarProps {
   chats: Chat[];
   activeChatId: string;
   onChatClick: (id: string) => void;
+  onNewChat?: () => void;
 };
