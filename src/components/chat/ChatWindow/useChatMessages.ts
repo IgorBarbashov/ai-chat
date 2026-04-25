@@ -65,15 +65,15 @@ export const useChatMessages = (activeChatId: string) => {
   useEffect(() => {
     if (!activeChatId) return;
 
-    setLoading(true);
-
-    const timeoutId = setTimeout(() => {
+    const loadingId = setTimeout(() => setLoading(true), 0);
+    const dataId = setTimeout(() => {
       setMessages(MOCK_MESSAGES.concat(...(MOCK_MESSAGES.map((el, i) => ({...el, id: `t${i}`})))).filter((m) => m.chatId === activeChatId));
       setLoading(false);
     }, 500);
 
     return () => {
-      clearTimeout(timeoutId);
+      clearTimeout(loadingId);
+      clearTimeout(dataId);
     };
   }, [activeChatId]);
 
