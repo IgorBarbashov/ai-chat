@@ -1,6 +1,7 @@
 import { ActionIcon, Loader, Tooltip } from "@mantine/core";
 import { IconCopy } from "@tabler/icons-react";
 import ReactMarkdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
 import type { MessageProps } from "./Message.models";
 import styles from "./Message.module.css";
 
@@ -24,7 +25,7 @@ export const Message = ({ id, author, text, variant }: MessageProps) => {
       <div className={`${styles.root} ${styles.rootUser}`} data-id={id}>
         <div className={`${styles.bubble} ${styles.bubbleUser}`}>
           <div className={styles.header}>{author}</div>
-          <ReactMarkdown>{text}</ReactMarkdown>
+          <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{text}</ReactMarkdown>
 
           <Tooltip label="Копировать" withArrow>
             <ActionIcon
@@ -48,7 +49,7 @@ export const Message = ({ id, author, text, variant }: MessageProps) => {
         <div className={styles.assistantAvatar}>G</div>
         <div className={`${styles.bubble} ${styles.bubbleAssistant}`}>
           <div className={styles.header}>{author}</div>
-          {text === "" ? <Loader size="xs" /> : <ReactMarkdown>{text}</ReactMarkdown>}
+          {text === "" ? <Loader size="xs" /> : <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{text}</ReactMarkdown>}
 
           <Tooltip label="Копировать" withArrow>
             <ActionIcon
